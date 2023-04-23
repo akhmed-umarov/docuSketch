@@ -18,7 +18,6 @@ const IconComponent = () => {
     const arrayIcons = useMemo(()=>{ 
         let res = [];
         for (let el in fas) { 
-            delete fas[el].icon;
             res.push(fas[el]);
         }
         return res
@@ -61,7 +60,6 @@ const IconComponent = () => {
                     setClickCount(prevCount => prevCount - 1);
                   }, 3000 - (new Date() - fixedDablClick > 3000 ? 0 : new Date() - fixedDablClick));
             }
-
         }  
         return () =>{ 
             setFirstIter(true);
@@ -74,8 +72,6 @@ const IconComponent = () => {
       };
 
  
-
-
     return (
         <div className={styled.box}>
             <button type="text" className={styled.box__btn} onClick={changeIcon}>Change Icon</button>

@@ -1,5 +1,5 @@
 import './App.css'
-import IconComponent from '../IconComponent/IconComponent copy'
+import IconComponent from '../IconComponent/IconComponent'
 function App() {
 
 
