@@ -1,0 +1,18 @@
+.box { 
+    @apply flex flex-col border-4 border-orange-400 rounded-xl w-56 h-56 justify-evenly shadow-2xl;
+    h1 { 
+        @apply flex justify-center items-center flex-1 text-3xl text-red-800;
+    }
+    &__btn { 
+        transition: transform 0.4s, box-shadow 0.4s;
+        box-shadow: 1px 5px 3px rgb(101, 55, 6);
+        @apply m-5 border-4 border-orange-300 p-2 rounded-xl ;
+        &:hover{ 
+            @apply  -translate-y-1;
+            box-shadow: 1px 2px 2px rgb(101, 55, 6);
+        }
+    }
+    &__icon { 
+        @apply m-2 flex-1;
+    }
+}
