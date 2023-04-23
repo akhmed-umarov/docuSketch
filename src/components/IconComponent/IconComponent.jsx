@@ -12,8 +12,10 @@ const IconComponent = () => {
     const [changing , setChanging] = useState(undefined);
     const [icon , setIcon] = useState({});
     const [clickCount, setClickCount] = useState(0);
-    const [firstIter , setFirstIter] = useState(true);             //it's first  iteration 
-    const [fixedDablClick , setDablClikc] = useState(new Date());
+
+    const [lastChange , setLastChange] = useState(new Date());
+    const [lastClick , setLastClick] = useState(0);
+
 
     const arrayIcons = useMemo(()=>{ 
         let res = [];
@@ -25,56 +27,54 @@ const IconComponent = () => {
 
     const lengthIcons = useMemo(()=>arrayIcons.length , []);
 
-    useEffect(()=>{ 
-        setDablClikc(new Date());
-    }, [icon])
 
-    useEffect(()=>{ 
-        if (clickCount === 1) setDablClikc(new Date());
-    }, [clickCount])
 
     useEffect(() => {
-        let interval;
-        if (clickCount > 0) {
+    let timing;
+    if (clickCount > 0) { 
+        timing = setTimeout(() => {
+            setChanging(()=> true);
+        }, 1000 - (new Date() - lastChange));
+    }
+    return () =>{ 
+        clearTimeout(timing);
+    } 
+    }, [clickCount]);
+
+
+    useEffect(()=>{ 
+        if (changing) { 
             setTimeout(() => {
-                setChanging(()=>true);    
-            }, 500);
-            if ( !firstIter ) { 
-                interval = setInterval(() => {
-                    const newIcon = arrayIcons[Math.round(Math.random()*lengthIcons)]
-                    setIcon(()=>({
-                        ...newIcon
-                    }))
-                    setFirstIter(false);
-                    setChanging(()=>false);    
-                    setClickCount(prevCount => prevCount - 1);
-                  }, 3000 );
-            } else { 
-                interval = setInterval(() => {
-                    const newIcon = arrayIcons[Math.round(Math.random()*lengthIcons)]
-                    setIcon(()=>({
-                        ...newIcon
-                    }))
-                    setFirstIter(false);
-                    setChanging(()=>false);    
-                    setClickCount(prevCount => prevCount - 1);
-                  }, 3000 - (new Date() - fixedDablClick > 3000 ? 0 : new Date() - fixedDablClick));
-            }
-        }  
-        return () =>{ 
-            setFirstIter(true);
-            clearInterval(interval);
-        } 
-      }, [clickCount]);
-    
-      const changeIcon = () => {
-        setClickCount(prevCount => prevCount + 1);
-      };
+                const newIcon = arrayIcons[Math.round(Math.random()*lengthIcons)]
+                setIcon(()=>({
+                    ...newIcon
+                }))
+        }, clickCount === 1 && (new Date() - lastClick < 3000) ? 3000 : 2000);
+
+        }
+    } , [changing])
+
+    useEffect(()=>{ 
+        if ('prefix' in icon) { 
+        setLastChange(new Date());
+        setChanging(()=>false); 
+        setClickCount(prevCount => prevCount - 1);
+        }
+
+    }, [icon])
+
+
+
+    const clickBtn = () => {
+    setClickCount(prevCount => prevCount + 1);
+    setLastClick(new Date())
+    };
+
 
  
     return (
         <div className={styled.box}>
-            <button type="text" className={styled.box__btn} onClick={changeIcon}>Change Icon</button>
+            <button type="text" className={styled.box__btn} onClick={clickBtn}>Change Icon</button>
             {
                 changing === undefined  ? 
                 <h1>Click button</h1> :  
