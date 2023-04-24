@@ -75,14 +75,9 @@ const IconComponent = () => {
     return (
         <div className={styled.box}>
             <button type="text" className={styled.box__btn} onClick={clickBtn}>Change Icon</button>
-            {
-                changing === undefined  ? 
-                <h1>Click button</h1> :  
-                changing ? 
-                <h1>Loading...</h1>   : 
-                <FontAwesomeIcon icon={icon} size='4x' className={styled.box__icon}/> 
-            }
-
+                <h1 className={ changing === undefined ? styled.h1 : styled.h1__hidden }>Click button</h1> 
+                <h1 className={ changing  ? styled.h1 : styled.h1__hidden }>Loading...</h1>   
+                <FontAwesomeIcon className={ !changing  ? styled.box__icon : styled.box__icon__hidden} icon={icon} size='4x' /> 
         </div>
     );
 };

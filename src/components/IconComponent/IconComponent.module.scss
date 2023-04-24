@@ -1,7 +1,15 @@
 .box { 
     @apply flex flex-col border-4 border-orange-400 rounded-xl w-56 h-56 justify-evenly shadow-2xl;
-    h1 { 
+    .h1 { 
         @apply flex justify-center items-center flex-1 text-3xl text-red-800;
+        opacity: 1;
+        transition: opacity 0.4s ;
+        &__hidden { 
+            @apply flex justify-center items-center text-3xl text-red-800 max-h-0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s, max-height 0s 1s ;
+        }
     }
     &__btn { 
         transition: transform 0.4s, box-shadow 0.4s;
@@ -13,6 +21,14 @@
         }
     }
     &__icon { 
-        @apply m-2 flex-1;
+            @apply m-2 flex-1;
+            opacity: 1;
+            transition: opacity 0.4s;
+        &__hidden {
+            @apply m-2 max-h-0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s, max-height 0s 1s;
+        }
     }
 }
